@@ -14,7 +14,13 @@ namespace Deezefy.Business.Models
             Ativo,
             Inativo
         }
-        public int nOuvintes { get; set; }
+        public int numeroOuvintes
+        {
+            get
+            {
+                return Ouvintes.Count;
+            }
+        }
 
         public ICollection<Ouvinte> Ouvintes { get; set; }
         public ICollection<Musica> Musicas { get; set; }
