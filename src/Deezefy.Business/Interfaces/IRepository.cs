@@ -8,8 +8,8 @@ namespace Deezefy.Business.Interfaces
 {
     public interface IRepository <T> : IDisposable where T: Entity
     {
-        Task<List<T>> ObterTodos();
-        Task<List<T>> Buscar(Expression<Func<T, bool>> predicate);
+        Task<ICollection<T>> ObterTodos();
+        Task<ICollection<T>> Buscar(Expression<Func<T, bool>> predicate);
         Task Adicionar(T entity);
         Task Atualizar(T entity);
     }

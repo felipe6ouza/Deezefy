@@ -34,12 +34,12 @@ namespace Deezefy.Data.Repository
             await SaveChanges();
         }
 
-        public async Task<List<T>> ObterTodos()
+        public async Task<ICollection<T>> ObterTodos()
         {
             return await DbSet.ToListAsync();
         }
 
-        public async Task<List<T>> Buscar(Expression<Func<T, bool>> predicate)
+        public async Task<ICollection<T>> Buscar(Expression<Func<T, bool>> predicate)
         {
             return await DbSet
                 .AsNoTracking()
