@@ -7,6 +7,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Deezefy.Business.Interfaces;
 using Deezefy.Data.Repository;
+using Microsoft.OpenApi.Models;
+using System;
 
 namespace Deezefy.Application
 {
@@ -14,9 +16,16 @@ namespace Deezefy.Application
     {
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
-        public Startup(IConfiguration configuration)
+        public Startup(IHostEnvironment hostEnvironment)
         {
-            Configuration = configuration;
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(hostEnvironment.ContentRootPath)
+                .AddJsonFile("appsettings.json", true, true)
+                .AddJsonFile($"appsettings.{hostEnvironment.EnvironmentName}.json", true, true)
+                .AddEnvironmentVariables();
+
+
+            Configuration = builder.Build();
         }
 
         public IConfiguration Configuration { get; }
@@ -34,8 +43,33 @@ namespace Deezefy.Application
             services.AddScoped<IMusicaRepository, MusicaRepository>();
             services.AddScoped<IOuvinteRepository, OuvinteRepository>();
             services.AddScoped<IPlaylistRepository, PlaylistRepository>();
+            services.AddScoped<IUsuarioRepository, UsuarioRepository>();
 
 
+            services.AddAutoMapper(typeof(Startup));
+
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo
+
+                {
+                    Title = "Deezefy",
+                    Version = "v1",
+                    Description = "A simple ASP.NET Core Web API for Database class project of Computer Departament of Federal Univeristy of Sergipe.",
+                    Contact = new OpenApiContact
+                    {
+                        Name = "Felipe Souza",
+                        Email = "felipe.souz@dcomp.ufs.br",
+                        Url = new Uri("https://github.com/felipe6ouza"),
+                    },
+
+                });
+            });
+
+            services.AddCors(c =>
+            {
+                c.AddPolicy("AllowOrigin", options => options.AllowAnyOrigin());
+            });
 
 
         }
@@ -50,9 +84,17 @@ namespace Deezefy.Application
 
             app.UseRouting();
 
+            app.UseCors(options => options.AllowAnyOrigin());
+
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API v1");
+            });
+
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllers();
+                endpoints.MapControllerRoute(name: "Default", pattern: "/swagger/");
             });
         }
     }
