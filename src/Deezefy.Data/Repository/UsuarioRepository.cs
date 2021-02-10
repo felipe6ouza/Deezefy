@@ -5,15 +5,14 @@ using System.Threading.Tasks;
 
 namespace Deezefy.Data.Repository
 {
-    public class ArtistaRepository : Repository<Artista>, IArtistaRepository
+    public class UsuarioRepository : Repository<Usuario>, IUsuarioRepository
     {
-        public ArtistaRepository(DeezefyDbContext deezefyDbContext): base(deezefyDbContext) { }
-   
-        public async Task<Artista> ObterPorEmail(string email)
+        public UsuarioRepository(DeezefyDbContext deezefyDbContext) : base(deezefyDbContext) { }
+
+         public async Task<Usuario> ObterPorEmail(string email)
         {
             return await DbSet.FindAsync(email);
-            
-         }
+        }
 
         public async Task Remover(string email)
         {

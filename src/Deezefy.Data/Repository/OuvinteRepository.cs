@@ -10,7 +10,7 @@ namespace Deezefy.Data.Repository
 
         public OuvinteRepository(DeezefyDbContext deezefyDbContext) : base(deezefyDbContext) { }
         
-        public async Task<Ouvinte> ObterPorId(string email)
+        public async Task<Ouvinte> ObterPorEmail(string email)
         {
             return await DbSet.FindAsync(email);
         }

@@ -5,7 +5,7 @@ namespace Deezefy.Business.Interfaces
 {
     public interface IOuvinteRepository : IRepository<Ouvinte>
     {
-        Task<Ouvinte> ObterPorId(string email);
+        Task<Ouvinte> ObterPorEmail(string email);
         Task Remover(string email);
     }
 

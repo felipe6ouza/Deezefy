@@ -5,7 +5,7 @@ namespace Deezefy.Business.Interfaces
 {
     public interface IArtistaRepository : IRepository<Artista>
     {
-        Task<Artista> ObterPorId(string email);
+        Task<Artista> ObterPorEmail(string email);
         Task Remover(string email);
     }
 

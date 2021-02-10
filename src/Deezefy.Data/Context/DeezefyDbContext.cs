@@ -74,7 +74,7 @@ namespace Deezefy.Data.Context
              .HasForeignKey(e => e.EmailOrganizador);
 
             modelBuilder.Entity<Usuario>().Ignore(u => u.Idade);
-            modelBuilder.Entity<Playlist>().Ignore(p => p.nOuvintes);
+            modelBuilder.Entity<Playlist>().Ignore(p => p.numeroOuvintes);
 
 
         }
